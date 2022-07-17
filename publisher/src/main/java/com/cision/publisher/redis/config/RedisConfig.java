@@ -1,13 +1,15 @@
 package com.cision.publisher.redis.config;
 
 import com.cision.publisher.redis.queue.MessagePublisher;
-import com.cision.publisher.redis.queue.RedisMessagePublisher;
+import com.cision.publisher.redis.queue.impl.RedisMessagePublisher;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -17,13 +19,18 @@ import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class RedisConfig {
+    @Value("${spring.redis.host}")
+    private String REDIS_HOST;
+    @Value("${spring.redis.port}")
+    private Integer REDIS_PORT;
 
     public static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
     public static LocalDateTimeSerializer LOCAL_DATETIME_SERIALIZER = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
 
     @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
-        return new JedisConnectionFactory();
+    public JedisConnectionFactory jedisConnectionFactory() {
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(REDIS_HOST, REDIS_PORT);
+        return new JedisConnectionFactory(config);
     }
 
     @Bean

@@ -18,10 +18,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import static com.cision.subscriber.configuration.Appconfiguration.LOCAL_DATETIME_SERIALIZER;
 
 @Configuration
-//@ComponentScan("com.cision.processing.pipeline.redis")
-//@EnableRedisRepositories(basePackages = "com.cision.processing.pipeline.repository")
-@EnableMongoRepositories
-//@PropertySource("classpath:application.properties")
 public class RedisConfig {
 
     @Bean

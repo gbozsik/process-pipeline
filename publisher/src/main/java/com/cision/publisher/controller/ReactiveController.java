@@ -2,7 +2,7 @@ package com.cision.publisher.controller;
 
 import com.cision.publisher.model.MessageModel;
 import com.cision.publisher.model.RestResponse;
-import com.cision.publisher.service.SubscribeServiceImpl;
+import com.cision.publisher.service.impl.SubscribeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

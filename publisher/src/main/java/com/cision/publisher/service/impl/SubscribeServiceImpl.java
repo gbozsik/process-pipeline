@@ -1,8 +1,9 @@
-package com.cision.publisher.service;
+package com.cision.publisher.service.impl;
 
 import com.cision.publisher.model.MessageModel;
 import com.cision.publisher.model.RestResponse;
-import com.cision.publisher.redis.queue.RedisMessagePublisher;
+import com.cision.publisher.redis.queue.impl.RedisMessagePublisher;
+import com.cision.publisher.service.SubscriberService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

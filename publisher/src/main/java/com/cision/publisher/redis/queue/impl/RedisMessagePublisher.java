@@ -1,6 +1,7 @@
-package com.cision.publisher.redis.queue;
+package com.cision.publisher.redis.queue.impl;
 
 import com.cision.publisher.model.MessageModel;
+import com.cision.publisher.redis.queue.MessagePublisher;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

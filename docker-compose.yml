@@ -1,33 +1,39 @@
 
-version: '2'
-
-networks:
-  app-network:
-    driver: bridge
+version: '3.8'
 
 services:
   redis:
+    container_name: redis
     image: 'bitnami/redis:latest'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - app-network
     ports:
       - "6379:6379"
     expose:
       - "6379"
   mongodb:
+    container_name: mongodb
     image: mongo:5.0
     ports:
       - 27017:27017
-    networks:
-      - app-network
     volumes:
       - ~/apps/mongo:/data/db
-#    environment:
-#      - MONGO_INITDB_ROOT_USERNAME=root
-#      - MONGO_INITDB_ROOT_PASSWORD=root
-#  myapplication:
- #   image: 'YOUR_APPLICATION_IMAGE'
-  #  networks:
-   #   - app-tier
+  publisher:
+    build: 
+      context: ./publisher
+    container_name: publisher
+    image: gbozsik/process-publisher
+    depends_on:
+      - redis
+    ports:
+      - 8088:8083
+  subscriber:
+    build: 
+      context: ./subscriber
+    container_name: subscriber
+    image: gbozsik/process-subscriber
+    depends_on:
+      - redis
+      - mongodb
+    ports:
+      - 8087:8085

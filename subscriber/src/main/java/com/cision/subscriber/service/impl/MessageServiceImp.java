@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Service
 public class MessageServiceImp implements MessageService {
 
-    private Logger logger = getLogger(MessageServiceImp.class);
+    private final Logger logger = getLogger(MessageServiceImp.class);
 
     private final MessageMongoRepository messageMongoRepository;
 
@@ -49,5 +50,10 @@ public class MessageServiceImp implements MessageService {
                     .doOnError(throwable -> logger.error("Failed to insert message to Database", throwable))
                     .subscribe();
         }
+    }
+
+    @Override
+    public Flux<MessageDocument> getAllMessages() {
+        return messageMongoRepository.findAll();
     }
 }
